@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1591972486443.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2810950525",
+    "id" : "D147F12F",
+    "lastKnownWriteTime" : 1591972464,
+    "last_content_update" : 1591972464,
+    "path" : "H:/2019_SatelliteDataProject/Github/Copernicus-Global-Land-Service-Data-Download-with-R/land.Copernicus Data Download.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "121,3",
+        "scrollLine" : "101"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

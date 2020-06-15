@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1591971545246.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3277445515",
+    "id" : "E8733AFC",
+    "lastKnownWriteTime" : 1591974634,
+    "last_content_update" : 1591974634258,
+    "path" : "H:/2019_SatelliteDataProject/RCGLS/man/nc_open.CGLS.data.Rd",
+    "project_path" : "man/nc_open.CGLS.data.Rd",
+    "properties" : {
+        "cursorPosition" : "4,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}
