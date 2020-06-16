@@ -62,13 +62,13 @@ Also see https://github.com/AECP-ETHZ/Copernicus-Global-Land-Service-Data-Downlo
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-PATH       <- "" #Insert your target directory, for example: D:/land.copernicus
-USERNAME   <- "" #Insert username
-PASSWORD   <- "" #Insert password
+PATH       <- "D:/land.copernicus" #Insert your target directory
+USERNAME   <- "wvroege" #Insert username
+PASSWORD   <- "CGLS_password" #Insert password
 TIMEFRAME  <- seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days") #Insert timeframe of interest, for example June 2019
 PRODUCT    <- "fapar" #Insert product variable -> CHOSE FROM fapar, fcover, lai, ndvi,  ssm, swi, lst, ...
 RESOLUTION <- "1km" #Insert resolution (1km, 300m or 100m)
 VERSION    <- "v1" #"Insert version: "v1", "v2", "v3",...
 
 download.CGLS.data(path=PATH, username=USERNAME, password=PASSWORD, timeframe=TIMEFRAME, product=PRODUCT, resolution=RESOLUTION, version=VERSION)
-
+}

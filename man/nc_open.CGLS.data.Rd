@@ -61,7 +61,7 @@ Also see https://github.com/AECP-ETHZ/Copernicus-Global-Land-Service-Data-Downlo
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-PATH       <- "" #Insert your target directory, for example: D:/land.copernicus
+PATH       <- "D:/land.copernicus" #Insert your target directory
 DATE       <- "2019-06-13" #INSERT DATE OF INTEREST, for example June 13 2019
 PRODUCT    <- "fapar" #Insert product variable -> CHOSE FROM fapar, fcover, lai, ndvi,  ssm, swi, lst, ...
 RESOLUTION <- "1km" #Insert resolution (1km, 300m or 100m)
@@ -69,3 +69,4 @@ VERSION    <- "v1" #"Insert version: "v1", "v2", "v3",...
 
 nc      <- nc_open.CGLS.data   (path=PATH,date=DATE, product=PRODUCT, resolution=RESOLUTION, version=VERSION)
 
+}

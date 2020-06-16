@@ -53,7 +53,7 @@ Also see https://github.com/AECP-ETHZ/Copernicus-Global-Land-Service-Data-Downlo
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-PATH       <- "D:/land.copernicus" #INSERT DIRECTORY, for example: D:/land.copernicus
+PATH       <- "D:/land.copernicus" #INSERT DIRECTORY
 TIMEFRAME  <- seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days") #INSERT TIMEFRAME OF INTEREST, for example June 2019
 PRODUCT    <- "fapar" #INSERT PRODUCT VARIABLE;(for example fapar) -> CHOSE FROM fapar, fcover, lai, ndvi,  ss, swi, lst, ...
 RESOLUTION <- "1km" #INSERT RESOLTION (1km, 300m or 100m)
@@ -61,4 +61,4 @@ VERSION    <- "v1" #"INSERT VERSION: "v1", "v2", "v3",...
 VARIABLE   <- "FAPAR" #INSERT VARIABLE NAME, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise, ... . -->Go to the product site e.g. https://land.copernicus.eu/global/products/ssm) and check for available variable names under the tap 'techinal'
 
 data   <- stack.CGLS.data(path=PATH,timeframe=TIMEFRAME, product=PRODUCT, resolution=RESOLUTION, version=VERSION, variable=VARIABLE)
-
+}
