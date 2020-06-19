@@ -20,4 +20,7 @@ RoxygenNote: 7.1.0
 Imports:
     RCurl,
     ncdf4,
-    raster
+    raster,
+    sp
+Suggests: 
+    testthat
