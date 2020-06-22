@@ -6,7 +6,7 @@ Authors@R:
     person(given = "Willemijn",
            family = "Vroege",
            role = c("aut", "cre"),
-           email = "mvroege@ethz.ch",
+           email = "wvroege@ethz.ch",
            comment = c(ORCID = "0000-0001-5076-0559"))
 Description: These functions rely on the data provided in the data manifest of
     the Copernicus service.  These functinos allow to download data from the
