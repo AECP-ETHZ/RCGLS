@@ -1,0 +1,7 @@
+.Rbuildignore
+.Rhistory
+.Rproj.user/
+.RData
+RCGLS.Rproj
+
+.*.sw?

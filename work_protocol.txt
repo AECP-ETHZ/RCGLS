@@ -1,0 +1,22 @@
+work_protocol.txt
+
+:Author: Uwe Schmitt
+:Email: uwe.schmitt@id.ethz.ch
+:Date: 2020-06-12 15:50
+
+1. installation:
+
+    R> install.packages("usethis")
+    R> install.packages("devtools")
+    R> library(devtools)
+    R> library(usethis)
+    R> usethis::use_testthat()
+
+2. package setup:
+
+    R> create_package("RCGLS")
+
+3. build update docs from comments:
+
+   ./build_and_check.sh
+

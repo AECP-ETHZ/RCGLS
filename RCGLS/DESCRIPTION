@@ -1,0 +1,26 @@
+Package: RCGLS
+Title: Download Data Provided by the Copernicus Global Land Service and Open
+       this Data in R
+Version: 0.0.1
+Authors@R:
+    person(given = "Willemijn",
+           family = "Vroege",
+           role = c("aut", "cre"),
+           email = "mvroege@ethz.ch",
+           comment = c(ORCID = "0000-0001-5076-0559"))
+Description: These functions rely on the data provided in the data manifest of
+    the Copernicus service.  These functinos allow to download data from the
+    Copernicus Global Land Service Manifest. But you need to register at
+    <https://land.copernicus.eu/global> and create a username and password.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+Imports:
+    RCurl,
+    ncdf4,
+    raster,
+    sp
+Suggests: 
+    testthat
