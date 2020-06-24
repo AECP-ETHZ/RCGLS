@@ -1,13 +1,25 @@
 Package: RCGLS
 Title: Download Data Provided by the Copernicus Global Land Service and Open
        this Data in R
-Version: 0.0.1
-Authors@R:
-    person(given = "Willemijn",
+Version: 1.0.0
+Authors@R: c(
+    	person(given = "Willemijn",
            family = "Vroege",
            role = c("aut", "cre"),
            email = "wvroege@ethz.ch",
-           comment = c(ORCID = "0000-0001-5076-0559"))
+           comment = c(ORCID = "0000-0001-5076-0559")),
+	person(given = "Tim",
+           family = "Jacobs",
+           role = c("ctb"),
+           email = "helpdeskticket@vgt.vito.be"),
+	person(given = "Xavier",
+           family = "Rottlan Puig",
+           role = c("ctb"),
+           email = "xavier.rotllan.puig@aster-projects.cat"),
+	person(given = "Uwe",
+           family = "Schmitt",
+           role = c("ctb"),
+           email = "uwe.schmitt@id.ethz.ch"))
 Description: These functions rely on the data provided in the data manifest of
     the Copernicus service.  These functinos allow to download data from the
     Copernicus Global Land Service Manifest. But you need to register at

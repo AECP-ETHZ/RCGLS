@@ -4,34 +4,29 @@
 \alias{download_CGLS_data}
 \title{Download CGLS data}
 \usage{
-download_CGLS_data(
-  path,
-  username,
-  password,
-  timeframe,
-  product,
-  resolution,
-  version
-)
+download_CGLS_data(path, username, password, timeframe, product, resolution, version)
 }
 \arguments{
-\item{path}{DESCRIBE PATH HERE}
+\item{path}{Working directory, for example: D:/CGLS_Data}
 
-\item{username}{DESCRIBE HERE}
+\item{username}{Register at https://land.copernicus.eu/global/}
 
-\item{password}{DESCRIBE HERE}
+\item{password}{Register at https://land.copernicus.eu/global/}
 
-\item{timeframe}{DESCRIBE HERE}
+\item{timeframe}{Timeframe of interest (as daily date vector), for example june 2019: seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days")}
 
-\item{product}{DESCRIBE HERE}
+\item{product}{Product name: chose from fapar, fcover, lai, ndvi,  ss, swi, lst, ...}
 
-\item{resolution}{DESCRIBE HERE}
+\item{resolution}{1km, 300m or 100m}
 
-\item{version}{DESCRIBE HERE}
+\item{version}{Version number: v1, v2, v3,...}
 }
 \value{
-CGLS data DESCRIBE HERE
+CGLS data Data saved locally in chosen folder.
 }
 \description{
-Download CGLS data
+Downloads manifest files of the Copernicus Global Land Service. Registration at https://land.copernicus.eu/global/ is required.
+}
+\details{
+Check https://land.copernicus.eu/global/products/ for a product overview and product details. Check https://land.copernicus.vgt.vito.be/manifest/ for an overview for data availability in the manifest.
 }

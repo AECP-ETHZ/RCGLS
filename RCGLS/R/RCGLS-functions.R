@@ -18,7 +18,6 @@
 #
 #Author: Willemijn Vroege, ETH Zurich.
 #E-mail: wvroege@ethz.ch
-#Acknowlegdments: Many thanks to Tim Jacobs, VITO, Copernicus Global Help Desk and Xavier Rotllan Puig, Aster Projects for constructive feedback.
 #
 #
 #First version: 28.10.2019
@@ -33,29 +32,23 @@
 #' @importFrom utils download.file stack
 
 
-# Check https://land.copernicus.eu/global/products/ for a product overview and product details
-# check https://land.copernicus.vgt.vito.be/manifest/ for an overview for data availability in the manifest
-
-#PATH       : TARGET DIRECTORY, for example: D:/land.copernicus
-#USERNAME   : USERNAME
-#PASSWORD   : PASSWORD
-#TIMEFRAME  : TIMEFRAME OF INTEREST, for example June 2019
-#PRODUCT    : PRODUCT VARIABLE; CHOSE FROM fapar, fcover, lai, ndvi, ssm, swi, lst...
-#RESOLUTION : RESOLTION; CHOSE FROM  1km, 300m or 100m
-#VERSION    : VERSION; CHOSE FROM "v1", "v2", "v3"...
-
 #' @title Download CGLS data
 #'
-#' @param path DESCRIBE PATH HERE
-#' @param username DESCRIBE HERE
-#' @param password DESCRIBE HERE
-#' @param timeframe DESCRIBE HERE
-#' @param product DESCRIBE HERE
-#' @param resolution DESCRIBE HERE
-#' @param version DESCRIBE HERE
-#' @return CGLS data DESCRIBE HERE
-#'
+#' @description Downloads manifest files of the Copernicus Global Land Service. Registration at https://land.copernicus.eu/global/ is required.
+#' @usage download_CGLS_data(path, username, password, timeframe, product, resolution, version)
+#' @param path Working directory, for example: D:/CGLS_Data
+#' @param username Register at https://land.copernicus.eu/global/
+#' @param password Register at https://land.copernicus.eu/global/
+#' @param timeframe Timeframe of interest (as daily date vector), for example june 2019: seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days")
+#' @param product Product name: chose from fapar, fcover, lai, ndvi,  ss, swi, lst, ...
+#' @param resolution 1km, 300m or 100m
+#' @param version Version number: v1, v2, v3,...
+#' @return CGLS data Data saved locally in chosen folder.
+#' @details Check https://land.copernicus.eu/global/products/ for a product overview and product details. Check https://land.copernicus.vgt.vito.be/manifest/ for an overview for data availability in the manifest.
+
 #' @export
+
+
 download_CGLS_data <- function(path, username, password, timeframe, product,
                                resolution, version){
 
@@ -92,14 +85,28 @@ download_CGLS_data <- function(path, username, password, timeframe, product,
 }
 
 #' @title Open netcdf CGLS data
-#'
-#' @param path DESCRIBE PATH HERE
-#' @param date DESCRIBE HERE
-#' @param product DESCRIBE HERE
-#' @param resolution DESCRIBE HERE
-#' @param version DESCRIBE HERE
-#' @return CGLS data DESCRIBE HERE
-#'
+#' 
+#' @description Opens single orginal data files/layers of Copernicus Global as netCDF filesLand Service as netCDF files without adjusting coordinates. Coordinate adjustment is necessary as R uses upper left corner as pixel reference and Copernicus uses pixel centre. Also see: https://land.copernicus.eu/global/products/.
+#' @usage nc_open_CGLS_data(path, date, product, resolution, version)
+#' @param path Working directory, for example: D:/land.copernicus
+#' @param date Date of interest, for example for 13 june 2019: 2019-06-13
+#' @param product Product name: chose from fapar fapar, fcover, lai, ndvi,  ss, swi, lst, ...
+#' @param resolution 1km, 300m or 100m
+#' @param version Version number: v1, v2, v3,...
+#' @return CGLS data Opens single netcdf file in environment
+#' 
+#' @details Adjusting coordinates is a necessary step to use the data because Copernicus nc files have lat/long belonging to the centre of the pixel, and R uses upper/left corner. This function opens the data without any corrections.
+#' @note  
+#' Coordinates are shifted and need to be adjusted, for example by:
+#' if(resolution == "300m"){
+#' lon <- lon - (1/336)/2
+#' lat <- lat + (1/336)/2
+#' }
+#' if(resolution == "1km"){
+#' lon <- lon - (1/112)/2
+#' lat <- lat + (1/112)/2
+#' }
+
 #' @export
 
 nc_open_CGLS_data <- function(path, date, product, resolution, version){
@@ -117,15 +124,17 @@ nc_open_CGLS_data <- function(path, date, product, resolution, version){
 }
 
 #' @title Read netcdf CGLS data
-#'
-#' @param path DESCRIBE PATH HERE
-#' @param date DESCRIBE HERE
-#' @param product DESCRIBE HERE
-#' @param resolution DESCRIBE HERE
-#' @param version DESCRIBE HERE
-#' @param variable DESCRIBE HERE
-#' @return CGLS data DESCRIBE HERE
-#'
+#' @description Read single layers of Copernicus Global Land Service (CGLS) data and adjusts coordinates for R.
+#' @usage ncvar_get_CGSL_data(path, date, product, resolution, version, variable)
+#' @param path Working directory, for example: D:/land.copernicus
+#' @param date Date of interest, for example for 13 june 2019: 2019-06-13
+#' @param product Product name: chose from fapar fapar, fcover, lai, ndvi,  ss, swi, lst, ...
+#' @param resolution 1km, 300m or 100m
+#' @param version Version number: v1, v2, v3,...
+#' @param variable Product variable, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise: Check the product site (e.g. https://land.copernicus.eu/global/products/ssm) for available variable names under the tap 'technical'.
+#' @return CGLS data Large matrix of a specific variable in environment, coordinates adjusted.
+#' 
+#' @details Adjusting coordinates is a necessary step to use the data because Copernicus nc files have lat/long belonging to the centre of the pixel, and R uses upper/left corner. This function opens the data without any corrections.
 #' @export
 
 ncvar_get_CGSL_data <- function(path, date, product, resolution, version, variable){
@@ -159,14 +168,16 @@ ncvar_get_CGSL_data <- function(path, date, product, resolution, version, variab
 
 #' @title stack CGLS data
 #'
-#' @param path DESCRIBE PATH HERE
-#' @param timeframe DESCRIBE HERE
-#' @param product DESCRIBE HERE
-#' @param resolution DESCRIBE HERE
-#' @param version DESCRIBE HERE
-#' @param variable DESCRIBE HERE
-#' @return CGLS data DESCRIBE HERE
-#'
+#' @description Read all downloaded files from Copernicus Global Land Service within a timeframe as Raster Stack and adjusts coordinates for R.
+#' @usage stack_CGLS_data(path, timeframe, product, resolution, version, variable)
+#' @param path Working directory, for example: D:/land.copernicus
+#' @param timeframe Timeframe of interest (as daily date vector), for example june 2019: seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days")
+#' @param product Product name: chose from fapar fapar, fcover, lai, ndvi,  ss, swi, lst, ...
+#' @param resolution 1km, 300m or 100m
+#' @param version Version number: v1, v2, v3,...
+#' @param variable Product variable, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise: Check the product site (e.g. https://land.copernicus.eu/global/products/ssm) for available variable names under the tap 'technical'.
+#' @details Adjusting coordinates is a necessary step to use the data because Copernicus nc files have lat/long belonging to the centre of the pixel, and R uses upper/left corner.
+#' @return CGLS data Raster Stack
 #' @export
 
 stack_CGLS_data <- function(path, timeframe, product, resolution, version, variable){

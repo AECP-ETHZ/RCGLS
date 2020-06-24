@@ -7,21 +7,24 @@
 ncvar_get_CGSL_data(path, date, product, resolution, version, variable)
 }
 \arguments{
-\item{path}{DESCRIBE PATH HERE}
+\item{path}{Working directory, for example: D:/land.copernicus}
 
-\item{date}{DESCRIBE HERE}
+\item{date}{Date of interest, for example for 13 june 2019: 2019-06-13}
 
-\item{product}{DESCRIBE HERE}
+\item{product}{Product name: chose from fapar fapar, fcover, lai, ndvi,  ss, swi, lst, ...}
 
-\item{resolution}{DESCRIBE HERE}
+\item{resolution}{1km, 300m or 100m}
 
-\item{version}{DESCRIBE HERE}
+\item{version}{Version number: v1, v2, v3,...}
 
-\item{variable}{DESCRIBE HERE}
+\item{variable}{Product variable, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise: Check the product site (e.g. https://land.copernicus.eu/global/products/ssm) for available variable names under the tap 'technical'.}
 }
 \value{
-CGLS data DESCRIBE HERE
+CGLS data Large matrix of a specific variable in environment, coordinates adjusted.
 }
 \description{
-Read netcdf CGLS data
+Read single layers of Copernicus Global Land Service (CGLS) data and adjusts coordinates for R.
+}
+\details{
+Adjusting coordinates is a necessary step to use the data because Copernicus nc files have lat/long belonging to the centre of the pixel, and R uses upper/left corner. This function opens the data without any corrections.
 }
