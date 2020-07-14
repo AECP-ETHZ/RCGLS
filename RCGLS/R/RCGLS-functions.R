@@ -1,14 +1,10 @@
 ############################################################################################################################
 #
-#COPERNICUS GLOBAL LAND SERVICE (CGLS) DATA DOWNLOAD AND READ
+#COPERNICUS GLOBAL LAND SERVICE (CGLS) DATA DOWNLOAD
 #
-#These functions allow to automatically download data provided by the Copernicus Global Land Service and open this data in R.
-#See: https://land.copernicus.eu/global/
-#
-#These functions rely on the data provided in the data manifest of the Copernicus service.
-#These functions allow to download the data without ordering products first,
-#but you need to register at https://land.copernicus.eu/global/ and create a username and password.
-#
+#These functions allow to download data provided by the Copernicus Global Land Service data <https://land.copernicus.eu/global>. 
+#The functions rely on the manifest data <https://land.copernicus.eu/global/access>. Before you can download the data, you will first need to register 
+#to create a username and password.
 #Set your path, username, password, timeframe, product, resolution and if more than 1 version exists, version number. New products are created regularly.
 #For the most recent product availabilities at the Copernicus data manifest check: https://land.copernicus.vgt.vito.be/manifest/
 #
@@ -21,7 +17,7 @@
 #
 #
 #First version: 28.10.2019
-#Last update  : 12.06.2020
+#Last update  : 25.06.2020
 #
 ###########################################################################################################################
 
