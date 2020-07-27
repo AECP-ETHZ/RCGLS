@@ -31,8 +31,7 @@
 #' @title Download CGLS data
 #'
 #' @description Downloads manifest files of the Copernicus Global Land Service. Registration at https://land.copernicus.eu/global/ is required.
-#' @usage download_CGLS_data(path, username, password, timeframe, product, resolution, version)
-#' @param path Working directory, for example: D:/CGLS_Data
+#' @usage download_CGLS_data(username, password, timeframe, product, resolution, version)
 #' @param username Register at https://land.copernicus.eu/global/
 #' @param password Register at https://land.copernicus.eu/global/
 #' @param timeframe Timeframe of interest (as daily date vector), for example june 2019: seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days")
@@ -41,11 +40,20 @@
 #' @param version Version number: v1, v2, v3,...
 #' @return CGLS data Data saved locally in chosen folder.
 #' @details Check https://land.copernicus.eu/global/products/ for a product overview and product details. Check https://land.copernicus.vgt.vito.be/manifest/ for an overview for data availability in the manifest.
+#' @examples 
+#' USERNAME   <- "usernames" #Insert username
+#' PASSWORD   <- "password" #Insert password
+#' TIMEFRAME  <- seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days") #Insert timeframe of interest, for example June 2019
+#' PRODUCT    <- "fapar" #Insert product variable -> CHOSE FROM fapar, fcover, lai, ndvi,  ssm, swi, lst, ...
+#' RESOLUTION <- "1km" #Insert resolution (1km, 300m or 100m)
+#' VERSION    <- "v1" #"Insert version: "v1", "v2", "v3",...
+#' 
+#'download.CGLS.data(username=USERNAME, password=PASSWORD, timeframe=TIMEFRAME, product=PRODUCT, resolution=RESOLUTION, version=VERSION) 
 
 #' @export
 
 
-download_CGLS_data <- function(path, username, password, timeframe, product,
+download_CGLS_data <- function(username, password, timeframe, product,
                                resolution, version){
 
   if(resolution == "300m"){
@@ -66,9 +74,9 @@ download_CGLS_data <- function(path, username, password, timeframe, product,
   file.url <- paste0("https://", paste(username, password, sep=":"), "@", sub(".*//", "",file.url))
   if(grepl("does not exist", file.url[10])) stop("This product is not available or the product name is misspecified")
 
-  setwd(path)
+  wd <- getwd()           
   if(!dir.exists(collection)) dir.create(collection)
-  setwd(paste(path, collection, sep="/"))
+  setwd(paste(wd, collection, sep="/"))
 
     for (i in 1:length(timeframe)){
      temp <- grep(gsub("-", "", timeframe[[i]]),file.url, fixed=T, value=T) #select a file for each day
@@ -83,8 +91,7 @@ download_CGLS_data <- function(path, username, password, timeframe, product,
 #' @title Open netcdf CGLS data
 #' 
 #' @description Opens single orginal data files/layers of Copernicus Global as netCDF filesLand Service as netCDF files without adjusting coordinates. Coordinate adjustment is necessary as R uses upper left corner as pixel reference and Copernicus uses pixel centre. Also see: https://land.copernicus.eu/global/products/.
-#' @usage nc_open_CGLS_data(path, date, product, resolution, version)
-#' @param path Working directory, for example: D:/land.copernicus
+#' @usage nc_open_CGLS_data(date, product, resolution, version)
 #' @param date Date of interest, for example for 13 june 2019: 2019-06-13
 #' @param product Product name: chose from fapar fapar, fcover, lai, ndvi,  ss, swi, lst, ...
 #' @param resolution 1km, 300m or 100m
@@ -102,10 +109,18 @@ download_CGLS_data <- function(path, username, password, timeframe, product,
 #' lon <- lon - (1/112)/2
 #' lat <- lat + (1/112)/2
 #' }
+#' 
+#' @examples 
+#' DATE       <- "2019-06-13" #INSERT DATE OF INTEREST, for example June 13 2019
+#' PRODUCT    <- "fapar" #Insert product variable -> CHOSE FROM fapar, fcover, lai, ndvi,  ssm, swi, lst, ...
+#' RESOLUTION <- "1km" #Insert resolution (1km, 300m or 100m)
+#' VERSION    <- "v1" #"Insert version: "v1", "v2", "v3",...
+#' 
+#' nc      <- nc_open.CGLS.data   (date=DATE, product=PRODUCT, resolution=RESOLUTION, version=VERSION)
 
 #' @export
 
-nc_open_CGLS_data <- function(path, date, product, resolution, version){
+nc_open_CGLS_data <- function(date, product, resolution, version){
   if(resolution == "300m"){
     resolution1 <- "333m"
     product <- paste0(product, "300")
@@ -113,7 +128,6 @@ nc_open_CGLS_data <- function(path, date, product, resolution, version){
     resolution1 <- resolution
   }
   collection <- paste(product, version, resolution1, sep="_")
-  setwd(path)
   all.filenames.product  <- list.files(pattern=(collection), recursive = TRUE)
   specific.filename<-grep(gsub("-","",date), all.filenames.product, value = T)
   nc  <- nc_open(specific.filename)
@@ -121,8 +135,7 @@ nc_open_CGLS_data <- function(path, date, product, resolution, version){
 
 #' @title Read netcdf CGLS data
 #' @description Read single layers of Copernicus Global Land Service (CGLS) data and adjusts coordinates for R.
-#' @usage ncvar_get_CGSL_data(path, date, product, resolution, version, variable)
-#' @param path Working directory, for example: D:/land.copernicus
+#' @usage ncvar_get_CGSL_data(date, product, resolution, version, variable)
 #' @param date Date of interest, for example for 13 june 2019: 2019-06-13
 #' @param product Product name: chose from fapar fapar, fcover, lai, ndvi,  ss, swi, lst, ...
 #' @param resolution 1km, 300m or 100m
@@ -131,9 +144,17 @@ nc_open_CGLS_data <- function(path, date, product, resolution, version){
 #' @return CGLS data Large matrix of a specific variable in environment, coordinates adjusted.
 #' 
 #' @details Adjusting coordinates is a necessary step to use the data because Copernicus nc files have lat/long belonging to the centre of the pixel, and R uses upper/left corner. This function opens the data without any corrections.
+#' @examples 
+#' DATE       <- "2019-06-13" #INSERT DATE OF INTEREST, for example June 13 2019
+#' PRODUCT    <- "fapar" #Insert product variable -> CHOSE FROM fapar, fcover, lai, ndvi,  ssm, swi, lst, ...
+#' RESOLUTION <- "1km" #Insert resolution (1km, 300m or 100m)
+#' VERSION    <- "v1" #"Insert version: "v1", "v2", "v3",...
+#' VARIABLE   <- "FAPAR" #Insert product variable, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise, ... . -->Go to the product site e.g. https://land.copernicus.eu/global/products/ssm) and check for available variable names under the tap 'techinal'
+#' 
+#' nc_data <- ncvar_get_CGSL.data (date=DATE, product=PRODUCT, resolution=RESOLUTION, version=VERSION, variable=VARIABLE)
 #' @export
 
-ncvar_get_CGSL_data <- function(path, date, product, resolution, version, variable){
+ncvar_get_CGSL_data <- function(date, product, resolution, version, variable){
   if(resolution == "300m"){
     resolution1 <- "333m"
     product <- paste0(product, "300")
@@ -141,7 +162,6 @@ ncvar_get_CGSL_data <- function(path, date, product, resolution, version, variab
     resolution1 <- resolution
   }
   collection <- paste(product, version, resolution1, sep="_")
-  setwd(path)
   all.filenames.product  <- list.files(pattern=(collection), recursive = TRUE)
   specific.filename<-grep(gsub("-","",date), all.filenames.product, value = T)
   nc  <- nc_open(specific.filename)
@@ -165,8 +185,7 @@ ncvar_get_CGSL_data <- function(path, date, product, resolution, version, variab
 #' @title stack CGLS data
 #'
 #' @description Read all downloaded files from Copernicus Global Land Service within a timeframe as Raster Stack and adjusts coordinates for R.
-#' @usage stack_CGLS_data(path, timeframe, product, resolution, version, variable)
-#' @param path Working directory, for example: D:/land.copernicus
+#' @usage stack_CGLS_data(timeframe, product, resolution, version, variable)
 #' @param timeframe Timeframe of interest (as daily date vector), for example june 2019: seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days")
 #' @param product Product name: chose from fapar fapar, fcover, lai, ndvi,  ss, swi, lst, ...
 #' @param resolution 1km, 300m or 100m
@@ -174,9 +193,16 @@ ncvar_get_CGSL_data <- function(path, date, product, resolution, version, variab
 #' @param variable Product variable, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise: Check the product site (e.g. https://land.copernicus.eu/global/products/ssm) for available variable names under the tap 'technical'.
 #' @details Adjusting coordinates is a necessary step to use the data because Copernicus nc files have lat/long belonging to the centre of the pixel, and R uses upper/left corner.
 #' @return CGLS data Raster Stack
+#' @examples
+#' TIMEFRAME  <- seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days") #INSERT TIMEFRAME OF INTEREST, for example June 2019
+#' PRODUCT    <- "fapar" #INSERT PRODUCT VARIABLE;(for example fapar) -> CHOSE FROM fapar, fcover, lai, ndvi,  ss, swi, lst, ...
+#' RESOLUTION <- "1km" #INSERT RESOLTION (1km, 300m or 100m)
+#' VERSION    <- "v1" #"INSERT VERSION: "v1", "v2", "v3",...
+#' VARIABLE   <- "FAPAR" #INSERT VARIABLE NAME, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise, ... . -->Go to the product site e.g. https://land.copernicus.eu/global/products/ssm) and check for available variable names under the tap 'techinal'
+#' data   <- stack.CGLS.data(timeframe=TIMEFRAME, product=PRODUCT, resolution=RESOLUTION, version=VERSION, variable=VARIABLE)
 #' @export
 
-stack_CGLS_data <- function(path, timeframe, product, resolution, version, variable){
+stack_CGLS_data <- function(timeframe, product, resolution, version, variable){
   if(resolution == "300m"){
     resolution1 <- "333m"
     product <- paste0(product, "300")
@@ -184,11 +210,10 @@ stack_CGLS_data <- function(path, timeframe, product, resolution, version, varia
     resolution1 <- resolution
   }
   collection <- paste(product, version, resolution1, sep="_")
-  setwd(path)
   all.filenames.product  <- list.files(pattern=(collection), recursive = TRUE)
   datepattern   <- gsub("-", "", timeframe)
   datepattern.in.timeframe <- names(unlist(sapply(datepattern, grep, all.filenames.product)))
-  filenames.in.timeframe <- paste(path, all.filenames.product[unlist(sapply(datepattern, grep, all.filenames.product))], sep="/")
+  filenames.in.timeframe <- paste(all.filenames.product[unlist(sapply(datepattern, grep, all.filenames.product))], sep="/")
   options(warn=-1)
   data <- stack(filenames.in.timeframe, varname=variable, quick=T) #this produces a warning because the projection gets off as R reads the coordinates as left upper corner. This is corrected below.
   options(warn=0)
