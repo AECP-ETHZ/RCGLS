@@ -7,19 +7,33 @@
 nc_open_CGLS_data(path, date, product, resolution, version)
 }
 \arguments{
-\item{path}{DESCRIBE PATH HERE}
+\item{path}{Working directory, for example: D:/land.copernicus}
 
-\item{date}{DESCRIBE HERE}
+\item{date}{Date of interest, for example for 13 june 2019: 2019-06-13}
 
-\item{product}{DESCRIBE HERE}
+\item{product}{Product name: chose from fapar fapar, fcover, lai, ndvi,  ss, swi, lst, ...}
 
-\item{resolution}{DESCRIBE HERE}
+\item{resolution}{1km, 300m or 100m}
 
-\item{version}{DESCRIBE HERE}
+\item{version}{Version number: v1, v2, v3,...}
 }
 \value{
-CGLS data DESCRIBE HERE
+CGLS data Opens single netcdf file in environment
 }
 \description{
-Open netcdf CGLS data
+Opens single orginal data files/layers of Copernicus Global as netCDF filesLand Service as netCDF files without adjusting coordinates. Coordinate adjustment is necessary as R uses upper left corner as pixel reference and Copernicus uses pixel centre. Also see: https://land.copernicus.eu/global/products/.
+}
+\details{
+Adjusting coordinates is a necessary step to use the data because Copernicus nc files have lat/long belonging to the centre of the pixel, and R uses upper/left corner. This function opens the data without any corrections.
+}
+\note{
+Coordinates are shifted and need to be adjusted, for example by:
+if(resolution == "300m"){
+lon <- lon - (1/336)/2
+lat <- lat + (1/336)/2
+}
+if(resolution == "1km"){
+lon <- lon - (1/112)/2
+lat <- lat + (1/112)/2
+}
 }

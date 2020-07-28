@@ -7,21 +7,24 @@
 stack_CGLS_data(path, timeframe, product, resolution, version, variable)
 }
 \arguments{
-\item{path}{DESCRIBE PATH HERE}
+\item{path}{Working directory, for example: D:/land.copernicus}
 
-\item{timeframe}{DESCRIBE HERE}
+\item{timeframe}{Timeframe of interest (as daily date vector), for example june 2019: seq(as.Date("2019-06-01"), as.Date("2019-06-15"), by="days")}
 
-\item{product}{DESCRIBE HERE}
+\item{product}{Product name: chose from fapar fapar, fcover, lai, ndvi,  ss, swi, lst, ...}
 
-\item{resolution}{DESCRIBE HERE}
+\item{resolution}{1km, 300m or 100m}
 
-\item{version}{DESCRIBE HERE}
+\item{version}{Version number: v1, v2, v3,...}
 
-\item{variable}{DESCRIBE HERE}
+\item{variable}{Product variable, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise: Check the product site (e.g. https://land.copernicus.eu/global/products/ssm) for available variable names under the tap 'technical'.}
 }
 \value{
-CGLS data DESCRIBE HERE
+CGLS data Raster Stack
 }
 \description{
-stack CGLS data
+Read all downloaded files from Copernicus Global Land Service within a timeframe as Raster Stack and adjusts coordinates for R.
+}
+\details{
+Adjusting coordinates is a necessary step to use the data because Copernicus nc files have lat/long belonging to the centre of the pixel, and R uses upper/left corner.
 }

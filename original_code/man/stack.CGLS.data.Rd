@@ -28,7 +28,7 @@ Timeframe of interest (as daily date vector), for example june 2019: seq(as.Date
  Version number: "v1", "v2", "v3",...
 }
 \item{variable}{
- Product variable, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise: Check the product site (e.g. https://land.copernicus.eu/global/products/ssm) for available variable names under the tap 'technical'
+ Product variable, for example: FAPAR, FAPAR_ERR, FAPAR_QFLAG, LMK, NMOD, ssm, ssm_noise: Check the product site (e.g. https://land.copernicus.eu/global/products/ssm) for available variable names under the tap 'technical'.
 }
 }
 \details{

@@ -20,3 +20,10 @@ work_protocol.txt
 
    ./build_and_check.sh
 
+
+:Author: Willemijn Vroege
+:Date: 2020-07-27 15:00
+
+1. Add ETH as author in Description file
+2. removed all lines with 'path'
+3. added examples 
