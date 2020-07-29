@@ -5,3 +5,4 @@
 RCGLS.Rproj
 
 .*.sw?
+RCGLS/man/*.Rd

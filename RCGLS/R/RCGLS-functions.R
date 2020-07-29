@@ -214,9 +214,15 @@ stack_CGLS_data <- function(timeframe, product, resolution, version, variable){
   datepattern   <- gsub("-", "", timeframe)
   datepattern.in.timeframe <- names(unlist(sapply(datepattern, grep, all.filenames.product)))
   filenames.in.timeframe <- paste(all.filenames.product[unlist(sapply(datepattern, grep, all.filenames.product))], sep="/")
+
+  # save current warning level
+  current_warn_level <- getOption("warn");
+
+  # make sure warn is reset when execution of function ends
+  on.exit(options(warn=current_warn_level))
+
   options(warn=-1)
   data <- stack(filenames.in.timeframe, varname=variable, quick=T) #this produces a warning because the projection gets off as R reads the coordinates as left upper corner. This is corrected below.
-  options(warn=0)
   extent(data) <- extent(c(-180, 180, -60, 80))
   proj4string(data) <- CRS("+init=epsg:4326")
   data<-data
